@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TaskFlow – Organize your day</title>
+<meta name="description" content="TaskFlow is a simple productivity app to organize tasks, manage priorities, and stay productive.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('taskflow-theme')||'light'}catch(e){}</script>
+</head>
+<body>
+<header class="header">
+  <div class="container nav">
+    <a href="#home" class="logo"><i class="fa-solid fa-circle-check"></i> TaskFlow</a>
+    <nav id="menu" class="menu" aria-label="Main">
+      <a href="#home">Home</a><a href="#tasks">Tasks</a><a href="#about">About</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn profile" aria-label="Profile"><i class="fa-solid fa-user"></i></button>
+      <button class="icon-btn burger" id="burger" aria-label="Open menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section id="home" class="welcome">
+    <h1>Welcome back! 👋</h1>
+    <p>Stay organized and get things done.</p>
+  </section>
+
+  <section class="stats" aria-label="Task statistics">
+    <article class="stat glass"><span class="stat-icon s1"><i class="fa-solid fa-list-check"></i></span><div><strong id="statTotal" data-v="0">0</strong><span>Total Tasks</span></div></article>
+    <article class="stat glass"><span class="stat-icon s2"><i class="fa-solid fa-circle-check"></i></span><div><strong id="statDone" data-v="0">0</strong><span>Completed</span></div></article>
+    <article class="stat glass"><span class="stat-icon s3"><i class="fa-solid fa-hourglass-half"></i></span><div><strong id="statPending" data-v="0">0</strong><span>Pending</span></div></article>
+    <article class="stat glass"><span class="stat-icon s4"><i class="fa-solid fa-calendar-day"></i></span><div><strong id="statToday" data-v="0">0</strong><span>Due Today</span></div></article>
+  </section>
+
+  <section class="glass panel" aria-labelledby="addTitle">
+    <h2 id="addTitle"><i class="fa-solid fa-plus"></i> Add a task</h2>
+    <form id="addForm" class="form" novalidate>
+      <label class="full">Task title
+        <input type="text" id="title" placeholder="What needs to be done?" maxlength="80" required>
+      </label>
+      <label class="full">Description
+        <textarea id="desc" rows="2" placeholder="Add a few details (optional)" maxlength="200"></textarea>
+      </label>
+      <label>Category
+        <select id="category"><option>Personal</option><option>Work</option><option>Study</option><option>Shopping</option><option>Health</option><option>Travel</option><option>Other</option></select>
+      </label>
+      <label>Priority
+        <select id="priority"><option>Low</option><option selected>Medium</option><option>High</option><option>Urgent</option></select>
+      </label>
+      <label>Due date <input type="date" id="date"></label>
+      <label>Due time <input type="time" id="time"></label>
+      <button type="submit" class="btn primary full"><i class="fa-solid fa-plus"></i> Add Task</button>
+    </form>
+  </section>
+
+  <section id="tasks" class="glass panel" aria-labelledby="listTitle">
+    <h2 id="listTitle"><i class="fa-solid fa-clipboard-list"></i> Your tasks</h2>
+    <div class="toolbar">
+      <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="search" placeholder="Search tasks…" aria-label="Search tasks"></div>
+      <div class="segmented" id="statusFilter" role="group" aria-label="Status filter">
+        <button class="active" data-status="all">All</button><button data-status="active">Active</button><button data-status="completed">Completed</button>
+      </div>
+      <select id="fCategory" aria-label="Filter by category"><option value="all">All categories</option><option>Personal</option><option>Work</option><option>Study</option><option>Shopping</option><option>Health</option><option>Travel</option><option>Other</option></select>
+      <select id="fPriority" aria-label="Filter by priority"><option value="all">All priorities</option><option>Low</option><option>Medium</option><option>High</option><option>Urgent</option></select>
+      <select id="sort" aria-label="Sort tasks"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="priority">Priority</option><option value="due">Due date</option></select>
+    </div>
+    <ul id="taskList" class="task-list"></ul>
+    <div id="empty" class="empty" hidden>
+      <div class="empty-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+      <h3 id="emptyTitle">No tasks yet!</h3>
+      <p id="emptyText">Add your first task and start being productive.</p>
+      <button class="btn primary" id="emptyAdd"><i class="fa-solid fa-plus"></i> Add Task</button>
+    </div>
+  </section>
+
+  <section id="about" class="glass panel about">
+    <h2><i class="fa-solid fa-circle-info"></i> About</h2>
+    <p>TaskFlow is a simple productivity application designed to help users organize their daily tasks, manage priorities, and stay productive.</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container foot">
+    <div><a href="#home" class="logo"><i class="fa-solid fa-circle-check"></i> TaskFlow</a><p>Organize your day, one task at a time.</p></div>
+    <nav aria-label="Footer"><a href="#home">Home</a><a href="#tasks">Tasks</a><a href="#about">About</a></nav>
+  </div>
+  <p class="copy">© 2026 TaskFlow. All rights reserved.</p>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+  <div class="modal-box glass">
+    <div class="modal-head"><h2 id="modalTitle">Edit task</h2><button class="icon-btn" id="modalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+    <form id="editForm" class="form" novalidate>
+      <label class="full">Task title <input type="text" id="eTitle" maxlength="80" required></label>
+      <label class="full">Description <textarea id="eDesc" rows="2" maxlength="200"></textarea></label>
+      <label>Category <select id="eCategory"><option>Personal</option><option>Work</option><option>Study</option><option>Shopping</option><option>Health</option><option>Travel</option><option>Other</option></select></label>
+      <label>Priority <select id="ePriority"><option>Low</option><option>Medium</option><option>High</option><option>Urgent</option></select></label>
+      <label>Due date <input type="date" id="eDate"></label>
+      <label>Due time <input type="time" id="eTime"></label>
+      <div class="full row"><button type="button" class="btn ghost" id="modalCancel">Cancel</button><button type="submit" class="btn primary">Save changes</button></div>
+    </form>
+  </div>
+</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>
